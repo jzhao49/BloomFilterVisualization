@@ -1,20 +1,20 @@
 import { TextField } from "@mui/material";
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
 import Button from '@mui/material/Button';
+import Form from "./Form";
 
 import { useState } from "react";
 
 function Visualization() {
-    const [value, setValue] = useState("");
+    const [input, setInput] = useState("");
 
     const handleOnChange = (event) => {
-        setValue(event.target.value);
+        setInput(event.target.value);
     }
     
     const handleonClick = () => {
-        console.log(value);
+        console.log(input);
     }
 
     return (
@@ -22,13 +22,12 @@ function Visualization() {
             <TextField
                     label="input"
                     margin="normal"	
-                    value={value}
+                    value={input}
                     onChange={handleOnChange}
             />
             <Button variant="text" onClick={handleonClick}> Add! </Button>
+            <Form />
         </Grid>
-
-
     )
 }
 
