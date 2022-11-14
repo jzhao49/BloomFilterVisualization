@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Form from "./Form";
 
 import { useState } from "react";
+import GraphVisualization from "./GraphVisualization";
 
 function Visualization() {
     const [input, setInput] = useState("");
@@ -28,6 +29,7 @@ function Visualization() {
             />
             <Button variant="text" onClick={handleonClick}> Add! </Button>
             <Form />
+            <GraphVisualization />
         </Grid>
     )
 }
