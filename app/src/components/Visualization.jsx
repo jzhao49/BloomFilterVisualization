@@ -21,10 +21,10 @@ function Visualization() {
     return (
         <Grid container spacing={3} padding={4} direction="row" alignContent="center">
             <TextField
-                    label="input"
-                    margin="normal"	
-                    value={input}
-                    onChange={handleOnChange}
+                label="input"
+                margin="normal"	
+                value={input}
+                onChange={handleOnChange}
             />
             <Button variant="text" onClick={handleonClick}> Add! </Button>
             <Form />
