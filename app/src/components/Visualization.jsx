@@ -9,6 +9,7 @@ import { useState } from "react";
 function Visualization() {
     const [input, setInput] = useState("");
 
+
     const handleOnChange = (event) => {
         setInput(event.target.value);
     }

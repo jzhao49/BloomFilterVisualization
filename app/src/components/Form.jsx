@@ -3,10 +3,10 @@ import { Grid, TextField, Button } from "@mui/material";
 
 const defaultValues = {
     size: 0,
-    num_hashes: 0
+    num_hashes: 0 
 };
 
-const Form = () => {
+const Form = (props) => {
     const [formValues, setFormValues] = useState(defaultValues);
 
     const handleInputChange = (e) => {
@@ -18,6 +18,10 @@ const Form = () => {
     };
 
     const handleSubmit = (event) => {
+        if (formValues.size === 0 || formValues.size === 0) {
+            alert("Neither parameter can be null!")
+            return
+        }
         event.preventDefault();
         console.log(formValues);
     };
@@ -35,6 +39,7 @@ const Form = () => {
                 onChange={handleInputChange}
               />
             </Grid>
+            <br/>
             <Grid item>
               <TextField
                 id="num-hashes-input"
