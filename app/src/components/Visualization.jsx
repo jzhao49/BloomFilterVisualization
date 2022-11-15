@@ -29,8 +29,62 @@ function Visualization() {
             setBitArray(new_bit_arr);
             console.log(bitArray)
             console.log(seedsArray)
+
+            //graph bit nodes and query node.
+            add_bit_and_query_nodes(formValues.size);
         }
     }, [formValues]);
+
+//
+
+    const [myNodes, setNodes] = useState([]);
+    const [myEdges, setEdges] = useState([]);
+    let node_id_counter = 0;
+    const x_input_align = 50;
+    const x_bit_array_align = 100;
+    const y_align = 10;
+    const x_query_align = 200;
+    const y_query_align = 200;
+
+    function add_bit_and_query_nodes(size) {
+        for (let i = 0; i < size; i++) {
+            add_node("", x_bit_array_align, i*y_align);
+        }
+        // add the query node 
+        add_node("", x_query_align, y_query_align);
+    }
+
+    function change_query_edges(){
+        //TODO: change the edges from the query node.
+    }
+
+    function add_data_node(label_, bit_nodes) {
+        add_node(label_, x_input_align, node_id_counter*y_align);
+        // add edges 
+        for (let i = 0; i < bit_nodes.length; i++) {
+            add_edge(node_id_counter, bit_nodes[i]);
+        }
+        //TODO: update color
+    }
+
+    function add_node(label_, x_, y_) {
+        const new_node = {id: node_id_counter, 
+                    label: label_, 
+                    fixed:{x:true, y:true,}, 
+                    x:x_, 
+                    y:y_}
+        console.log("node id: " + new_node.id);
+        const temp = node_id_counter + 1;
+        node_id_counter = temp;
+        setNodes([...myNodes, new_node]);
+    }
+
+    function add_edge(id1, id2) {
+        const new_edge = {from: id1, to: id2};
+        setEdges([...myEdges, new_edge]);
+    }
+
+//
 
     const handleOnChange = (event) => {
         setInput(event.target.value);
@@ -59,7 +113,7 @@ function Visualization() {
             />
             <Button variant="text" onClick={handleonClick}> Add! </Button>
             <Form setParentState={setFormValues}/>
-            <GraphVisualization />
+            <GraphVisualization myNodes={myNodes} myEdges={myEdges}/>
         </Grid>
     )
 }
