@@ -5,6 +5,7 @@ import GraphVisualization from "./GraphVisualization";
 import doHash from "../mumurhash";
 
 function Visualization() {
+
     const [input, setInput] = useState("");
     const [formValues, setFormValues] = useState({
         size: 0,
@@ -13,6 +14,19 @@ function Visualization() {
     const [bitArray, setBitArray] = useState([]);
     const [seedsArray, setSeedsArray] = useState([]);
     const [hashIndices, setHashIndices] = useState([]);
+
+    //const [myNodes, setNodes] = useState([]);
+    //const [myEdges, setEdges] = useState([]);
+    let myNodes = [
+        {id: -1, label: "hi", fixed:{x:true, y:true,}, x:100, y:100}
+    ];
+    let myEdges = [];
+    let node_id_counter = 0;
+    const x_input_align = 50;
+    const x_bit_array_align = 100;
+    const y_align = 10;
+    const x_query_align = 200;
+    const y_query_align = 200;
 
     // TODO: FIX - UseEffect is delayed by one button click when updated in the child component
     useEffect(() => {
@@ -27,24 +41,16 @@ function Visualization() {
             }
             setSeedsArray(seeds_arr);
             setBitArray(new_bit_arr);
-            console.log(bitArray)
-            console.log(seedsArray)
+            console.log("bitArray: ");
+            console.log(bitArray);
+            console.log("seedsArray: ");
+            console.log(seedsArray);
 
             //graph bit nodes and query node.
-            add_bit_and_query_nodes(formValues.size);
+            add_bit_and_query_nodes(formValues.size -1);
+            console.log(myNodes);
         }
     }, [formValues]);
-
-//
-
-    const [myNodes, setNodes] = useState([]);
-    const [myEdges, setEdges] = useState([]);
-    let node_id_counter = 0;
-    const x_input_align = 50;
-    const x_bit_array_align = 100;
-    const y_align = 10;
-    const x_query_align = 200;
-    const y_query_align = 200;
 
     function add_bit_and_query_nodes(size) {
         for (let i = 0; i < size; i++) {
@@ -73,17 +79,16 @@ function Visualization() {
                     fixed:{x:true, y:true,}, 
                     x:x_, 
                     y:y_}
-        console.log("node id: " + new_node.id);
         const temp = node_id_counter + 1;
         node_id_counter = temp;
-        setNodes([...myNodes, new_node]);
+        //setNodes([...myNodes, new_node]);
+        myNodes.push(new_node);
     }
 
     function add_edge(id1, id2) {
         const new_edge = {from: id1, to: id2};
-        setEdges([...myEdges, new_edge]);
+        //setEdges([...myEdges, new_edge]);
     }
-
 //
 
     const handleOnChange = (event) => {
