@@ -7,23 +7,21 @@ const defaultValues = {
 };
 
 const Form = (props) => {
-    const [formValues, setFormValues] = useState(defaultValues);
-
-    const handleInputChange = (e) => {
+    const [formValues, setFormValues] = useState(defaultValues)
+    const handleOnChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
-          ...formValues,
-          [name]: value,
-        });
+            ...formValues,
+            [name]: value,  
+        })
     };
 
     const handleSubmit = (event) => {
-        if (formValues.size === 0 || formValues.size === 0) {
-            alert("Neither parameter can be null!")
-            return
-        }
+        props.setParentState({
+            size: formValues.size,
+            num_hashes: formValues.num_hashes
+          });
         event.preventDefault();
-        console.log(formValues);
     };
 
     return (
@@ -36,7 +34,7 @@ const Form = (props) => {
                 label="Size of Bloom Filter"
                 type="number"
                 value={formValues.size}
-                onChange={handleInputChange}
+                onChange={handleOnChange}
               />
             </Grid>
             <br/>
@@ -47,7 +45,7 @@ const Form = (props) => {
                 label="Number of Hash Functions"
                 type="number"
                 value={formValues.num_hashes}
-                onChange={handleInputChange}
+                onChange={handleOnChange}
               />
             </Grid>
             <Button variant="contained" color="primary" type="submit">

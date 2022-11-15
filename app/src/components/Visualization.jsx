@@ -1,7 +1,4 @@
-import { TextField } from "@mui/material";
-import Grid from '@mui/material/Grid';
-
-import Button from '@mui/material/Button';
+import { TextField, Grid, Button } from "@mui/material";
 import Form from "./Form";
 
 import { useState } from "react";
@@ -9,7 +6,11 @@ import GraphVisualization from "./GraphVisualization";
 
 function Visualization() {
     const [input, setInput] = useState("");
-
+    // const {BloomFilter} = require('bloom-filters');
+    const [formValues, setFormValues] = useState({
+        size: 0,
+        num_hashes: 0
+    });
 
     const handleOnChange = (event) => {
         setInput(event.target.value);
@@ -28,7 +29,7 @@ function Visualization() {
                 onChange={handleOnChange}
             />
             <Button variant="text" onClick={handleonClick}> Add! </Button>
-            <Form />
+            <Form setParentState={setFormValues}/>
             <GraphVisualization />
         </Grid>
     )
