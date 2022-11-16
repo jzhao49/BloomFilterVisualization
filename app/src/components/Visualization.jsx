@@ -1,4 +1,4 @@
-import { TextField, Grid, Button } from "@mui/material";
+import { TextField, Grid, Button, Paper } from "@mui/material";
 import Form from "./Form";
 import { useState, useEffect } from "react";
 import GraphVisualization from "./GraphVisualization";
@@ -15,6 +15,7 @@ function Visualization() {
     const [bitArray, setBitArray] = useState([]);
     const [seedsArray, setSeedsArray] = useState([]);
     const [hashIndices, setHashIndices] = useState([]);
+    const [queryResult, setQueryResult] = useState(-1);
 
     // TODO: FIX - UseEffect is delayed by one button click when updated in the child component
     useEffect(() => {
@@ -74,8 +75,10 @@ function Visualization() {
             }
         }
         if (not_found) {
+            setQueryResult(0);
             console.log("not found");
         } else {
+            setQueryResult(1);
             console.log("might be in set");
         }    
     }
@@ -89,15 +92,24 @@ function Visualization() {
                 onChange={handleOnChange_input}
             />
             <Button variant="text" onClick={handleonClick_input}> Add! </Button>
-            <TextField
-                label="query"
-                margin="normal"	
-                value={query}
-                onChange={handleOnChange_query}
-            />
-            <Button variant="text" onClick={handleonClick_query}> Search! </Button>
-            <Form setParentState={setFormValues}/>
-            
+            <Grid item xs={12}>
+                <TextField
+                    label="query"
+                    margin="normal"	
+                    value={query}
+                    onChange={handleOnChange_query}
+                />
+                <Button variant="text" onClick={handleonClick_query}> Search! </Button>
+                {queryResult !== -1 ? 
+                    <TextField 
+                        value={queryResult === 1 ? "Might be in set." : "Not in set."}
+                    /> 
+                    : <></>
+                }
+            </Grid>
+            <Grid item xs={12}>
+                <Form setParentState={setFormValues}/>
+            </Grid>
         </Grid>
     )
 }
