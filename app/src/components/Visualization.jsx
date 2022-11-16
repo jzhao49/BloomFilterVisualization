@@ -15,18 +15,16 @@ function Visualization() {
     const [seedsArray, setSeedsArray] = useState([]);
     const [hashIndices, setHashIndices] = useState([]);
 
-    //const [myNodes, setNodes] = useState([]);
-    //const [myEdges, setEdges] = useState([]);
-    let myNodes = [
-        {id: -1, label: "hi", fixed:{x:true, y:true,}, x:100, y:100}
-    ];
-    let myEdges = [];
+    const [myNodes, setNodes] = useState([]);
+    const [myEdges, setEdges] = useState([]);
+    let myNodesTemp = []; 
+    let myEdgesTemp = [];
     let node_id_counter = 0;
     const x_input_align = 50;
     const x_bit_array_align = 100;
-    const y_align = 10;
+    const y_align = 50;
     const x_query_align = 200;
-    const y_query_align = 200;
+    const y_query_align = 100;
 
     // TODO: FIX - UseEffect is delayed by one button click when updated in the child component
     useEffect(() => {
@@ -49,7 +47,7 @@ function Visualization() {
             console.log(seedsArray);
 
             //graph bit nodes and query node.
-            add_bit_and_query_nodes(formValues.size -1);
+            add_bit_and_query_nodes(formValues.size);
             console.log("myNodes: ");
             console.log(myNodes);
         }
@@ -57,40 +55,46 @@ function Visualization() {
 
     function add_bit_and_query_nodes(size) {
         for (let i = 0; i < size; i++) {
-            add_node("", x_bit_array_align, i*y_align);
+            add_node(bitArray[i], x_bit_array_align, i*y_align);
         }
         // add the query node 
-        add_node("", x_query_align, y_query_align);
+        add_node("query", x_query_align, y_query_align);
+
+        setNodes(myNodes.concat(myNodesTemp));
     }
 
-    function change_query_edges(){
-        //TODO: change the edges from the query node.
-    }
+    // function change_query_edges(new_edges){
+    //     //TODO: change the edges from the query node.
+    // }
 
     function add_data_node(label_, bit_nodes) {
+        //myNodesTemp = [];
         add_node(label_, x_input_align, node_id_counter*y_align);
         // add edges 
         for (let i = 0; i < bit_nodes.length; i++) {
             add_edge(node_id_counter, bit_nodes[i]);
         }
-        //TODO: update color
+        setNodes(myNodes.concat(myNodesTemp));
+        setEdges(myEdges.concat(myEdgesTemp));
+        //TODO: update color and bit value to 1.
     }
 
     function add_node(label_, x_, y_) {
+        console.log("add node id:" + node_id_counter);
         const new_node = {id: node_id_counter, 
                     label: label_, 
                     fixed:{x:true, y:true,}, 
                     x:x_, 
                     y:y_}
-        const temp = node_id_counter + 1;
-        node_id_counter = temp;
+        node_id_counter = node_id_counter + 1;
         //setNodes([...myNodes, new_node]);
-        myNodes.push(new_node);
+        myNodesTemp.push(new_node);
     }
 
     function add_edge(id1, id2) {
         const new_edge = {from: id1, to: id2};
         //setEdges([...myEdges, new_edge]);
+        myEdgesTemp.push(new_edge);
     }
 //
 
@@ -107,8 +111,13 @@ function Visualization() {
         for (let i = 0; i < hash_idxs.length; i++) {
             bitArray[hash_idxs[i]] = 1;
         }
+        console.log("hashIndices: ");
         console.log(hashIndices);
+        console.log("bitArray: ");
         console.log(bitArray);
+
+        add_data_node(input, hashIndices);
+        
     }
 
     return (
