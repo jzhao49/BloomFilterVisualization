@@ -1,32 +1,19 @@
 import Graph from "react-graph-vis";
-import { useState } from "react";
+import { useState,  useEffect} from "react";
 
 function GraphVisualization(props) {
     const myNodes = props.myNodes;
     const myEdges = props.myEdges;
 
-    console.log(myNodes);
+    //useEffect(() => {
+      console.log(myNodes);
+    //}, [myNodes]);
 
-    const graph = {
-        nodes: myNodes,
-        edges: myEdges
-        /*
-        nodes: [{id: 0, 
-          label: "hi", 
-          fixed:{x:true, y:true,}, 
-          x:100, 
-          y:100},
-          {id: 1, 
-            label: "bye", 
-            fixed:{x:true, y:true,}, 
-            x:150, 
-            y:150}],
-        edges: [
-          //{from: 0, to: 1},
-        ]
-        */
-      };
-    
+      const graph = {
+          nodes: myNodes,
+          edges: myEdges
+        };
+      
       const options = {
         layout: {
           // hierarchical: true

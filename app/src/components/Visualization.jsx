@@ -30,7 +30,9 @@ function Visualization() {
 
     // TODO: FIX - UseEffect is delayed by one button click when updated in the child component
     useEffect(() => {
-        if (formValues.size !== 0 || formValues.num_hashes !== 0) {
+        console.log("formValues: ");
+        console.log(formValues);
+        if (formValues.size !== 0 && formValues.num_hashes !== 0) {
             let new_bit_arr = [];
             for (let i = 0; i < formValues.size; i++) {
                 new_bit_arr.push(0);
@@ -48,6 +50,7 @@ function Visualization() {
 
             //graph bit nodes and query node.
             add_bit_and_query_nodes(formValues.size -1);
+            console.log("myNodes: ");
             console.log(myNodes);
         }
     }, [formValues]);
